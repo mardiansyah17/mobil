@@ -19,6 +19,7 @@
     "dependencies": {
         "@themesberg/tailwind-datepicker": "^1.1.0",
         "flowbite": "^2.2.0",
+        "moment": "^2.29.4",
         "tw-elements": "^1.0.0"
     }
 }
