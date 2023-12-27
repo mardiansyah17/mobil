@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\TypeRequest;
 use App\Models\Type;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Str;
 use Yajra\DataTables\DataTables;
-use App\Http\Requests\TypeRequest;
-use App\Http\Controllers\Controller;
 
 class TypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
+
     public function index()
     {
         if (request()->ajax()) {
@@ -23,7 +20,7 @@ class TypeController extends Controller
             return DataTables::of($query)
                 ->addColumn('action', function ($type) {
                     return '
-                        <a class="block w-full px-2 py-1 mb-1 text-xs text-center text-white transition duration-500 bg-gray-700 border border-gray-700 rounded-md select-none ease hover:bg-gray-800 focus:outline-none focus:shadow-outline" 
+                        <a class="block w-full px-2 py-1 mb-1 text-xs text-center text-white transition duration-500 bg-gray-700 border border-gray-700 rounded-md select-none ease hover:bg-gray-800 focus:outline-none focus:shadow-outline"
                             href="' . route('admin.types.edit', $type->id) . '">
                             Sunting
                         </a>
@@ -41,11 +38,14 @@ class TypeController extends Controller
         return view('admin.types.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View returned
-     */
+
+    public function downloadPdf()
+    {
+        $query = Type::query();
+        $pdf = Pdf::loadView('cetak.type', ['types' => $query->get()])->setPaper('a4', 'landscape');
+        return $pdf->stream();
+    }
+
     public function create()
     {
         return view('admin.types.create');
@@ -54,7 +54,7 @@ class TypeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(TypeRequest $request)
@@ -70,7 +70,7 @@ class TypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Type  $type
+     * @param \App\Models\Type $type
      * @return \Illuminate\Http\Response
      */
     public function show(Type $type)
@@ -81,7 +81,7 @@ class TypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Type  $type
+     * @param \App\Models\Type $type
      * @return \Illuminate\Http\Response|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit(Type $type)
@@ -94,8 +94,8 @@ class TypeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Type  $type
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Type $type
      * @return \Illuminate\Http\Response
      */
     public function update(TypeRequest $request, Type $type)
@@ -111,7 +111,7 @@ class TypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Type  $type
+     * @param \App\Models\Type $type
      * @return \Illuminate\Http\Response
      */
     public function destroy(Type $type)

@@ -54,9 +54,11 @@ Route::prefix('admin')->name('admin.')->middleware([
     'admin'
 ])->group(function () {
 
+    Route::get('/type/download', [AdminTypeController::class, 'downloadPdf'])->name('type.download-pdf');
     Route::post('/booking/download', [\App\Http\Controllers\Admin\BookingController::class, 'downloadPdf'])->name('bookings.download-pdf');
     Route::post('/item/download', [\App\Http\Controllers\Admin\ItemController::class, 'downloadPdf'])->name('items.download-pdf');
     Route::get('/brand/download', [AdminBrandController::class, 'downloadPdf'])->name('brand.download-pdf');
+    Route::post('/user/download', [AdminUsersController::class, 'downloadPdf'])->name('user.download-pdf');
 
 
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');

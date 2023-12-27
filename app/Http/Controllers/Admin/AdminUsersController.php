@@ -2,28 +2,26 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
-use Illuminate\Http\Request;
-use Laravel\Jetstream\Jetstream;
-use Yajra\DataTables\DataTables;
-use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\UserRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Hash;
+use Yajra\DataTables\DataTables;
 
 class AdminUsersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         //
         if (request()->ajax()) {
             $query = User::query();
+
+            if (request()->get('role')) {
+                $query->where('roles', '=', request()->get('role'));
+            }
 
             return DataTables::of($query)
                 ->addColumn('action', function ($user) {
@@ -32,7 +30,7 @@ class AdminUsersController extends Controller
                             href="' . route('admin.users.edit', $user->id) . '">
                             Edit
                         </a>
-                       
+
                         <form class="block w-full" onsubmit="return confirm(\'Apakah anda yakin?\');" -block" action="' . route('admin.users.destroy', $user->id) . '" method="POST">
                         <button class="w-full px-2 py-1 text-xs text-white transition duration-500 bg-red-500 border border-red-500 rounded-md select-none ease hover:bg-red-600 focus:outline-none focus:shadow-outline" >
                             Hapus
@@ -49,14 +47,21 @@ class AdminUsersController extends Controller
         return view('admin.users.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function downloadPdf()
+    {
+        $users = User::query();
+
+        if (request()->get('role')) {
+            $users->where('roles', '=', request()->get('role'));
+        }
+        $pdf = Pdf::loadView('cetak.user', ['users' => $users->get()])->setPaper('a4', 'landscape');
+        return $pdf->stream('users.pdf');
+    }
+
     public function create()
     {
-        
+
         // Validator::make($input, [
         //     'name' => ['required', 'string', 'max:255'],
         //     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -75,7 +80,7 @@ class AdminUsersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(UserRequest $request)
@@ -97,7 +102,7 @@ class AdminUsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -108,7 +113,7 @@ class AdminUsersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit(User $user)
@@ -122,8 +127,8 @@ class AdminUsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(UserUpdateRequest $request, User $user)
@@ -142,12 +147,12 @@ class AdminUsersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
     {
-        
+
         // User::delete();
         $user->delete();
 
