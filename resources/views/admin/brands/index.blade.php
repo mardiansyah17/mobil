@@ -20,12 +20,12 @@
                     url: '//cdn.datatables.net/plug-ins/1.12.1/i18n/id.json'
                 },
                 columns: [{
-                        data: 'id',
-                        name: 'id',
-                    },
+                    data: 'id',
+                    name: 'id',
+                },
                     //{
-                      //  data: 'no',
-                        //name: 'no',
+                    //  data: 'no',
+                    //name: 'no',
                     //},
                     {
                         data: 'name',
@@ -52,8 +52,13 @@
 
             <div class="mb-10">
                 <a href="{{ route('admin.brands.create') }}"
-                    class="px-4 py-2 font-bold text-white bg-green-500 rounded shadow-lg hover:bg-green-700">
+                   class="px-4 py-2 font-bold text-white bg-green-500 rounded shadow-lg hover:bg-green-700">
                     + Tambah Brand
+                </a>
+
+                <a href="{{ route('admin.brand.download-pdf') }}"
+                   class="px-4 py-2 font-bold text-white bg-blue-500 ml-3 rounded shadow-lg hover:bg-blue-700">
+                    Download PDF
                 </a>
             </div>
             <div class="overflow-hidden bg-white shadow-xl sm:rounded-lg">
@@ -61,16 +66,16 @@
                     <div class="px-4 py-5 bg-white sm:p-6">
                         <table id="dataTable">
                             <thead>
-                                <tr>
-                                    <th style="max-width: 1%">ID</th>
-                                    <th>Nama</th>
-                                    <th>Slug</th>
-                                    <th style="max-width: 1%">Aksi</th>
-                                </tr>
+                            <tr>
+                                <th style="max-width: 1%">ID</th>
+                                <th>Nama</th>
+                                <th>Slug</th>
+                                <th style="max-width: 1%">Aksi</th>
+                            </tr>
                             </thead>
                             <tbody></tbody>
                         </table>
-                    </div >
+                    </div>
                 </div>
             </div>
         </div>

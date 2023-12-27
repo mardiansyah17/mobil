@@ -2,28 +2,37 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Item;
-use Illuminate\Http\Request;
-use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ItemRequest;
 use App\Http\Requests\ItemUpdateRequest;
 use App\Models\Brand;
+use App\Models\Item;
 use App\Models\Type;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Str;
+use Yajra\DataTables\DataTables;
 
 class ItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
-     */
+
     public function index()
     {
         //
         if (request()->ajax()) {
             $query = Item::with(['brand', 'type']);
+
+            if (request()->get('harga')) {
+                $query->orderBy('price', request()->get('harga') == "kecil" ? "asc" : "desc");
+            }
+
+            if (request()->get('rating')) {
+                $query->orderBy('star', request()->get('rating') == "kecil" ? "asc" : "desc");
+            }
+
+            if (request()->get('review')) {
+                $query->orderBy('review', request()->get('rating') == "kecil" ? "asc" : "desc");
+            }
+
 
             return DataTables::of($query)
                 ->editColumn('thumbnail', function ($item) {
@@ -49,11 +58,26 @@ class ItemController extends Controller
         return view('admin.items.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function downloadPdf()
+    {
+        $query = Item::with(['brand', 'type']);
+
+        if (request()->get('harga')) {
+            $query->orderBy('price', request()->get('harga') == "kecil" ? "asc" : "desc");
+        }
+
+        if (request()->get('rating')) {
+            $query->orderBy('star', request()->get('rating') == "kecil" ? "asc" : "desc");
+        }
+
+        if (request()->get('review')) {
+            $query->orderBy('review', request()->get('rating') == "kecil" ? "asc" : "desc");
+        }
+
+        $pdf = Pdf::loadView('cetak.item', ['items' => $query->get()])->setPaper('a4', 'landscape');
+        return $pdf->stream();
+    }
+
     public function create()
     {
         //
@@ -66,7 +90,7 @@ class ItemController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(ItemRequest $request)
@@ -93,14 +117,13 @@ class ItemController extends Controller
         Item::create($data);
 
 
-
         return redirect()->route('admin.items.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -111,7 +134,7 @@ class ItemController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit(Item $item)
@@ -128,8 +151,8 @@ class ItemController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(ItemUpdateRequest $request, Item $item)
@@ -150,7 +173,7 @@ class ItemController extends Controller
                 array_push($photos, $photoPath);
             }
             $data['photos'] = json_encode($photos);
-        }else{
+        } else {
             $data['photos'] = $item->photos;
         }
 
@@ -161,7 +184,7 @@ class ItemController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Item $item)

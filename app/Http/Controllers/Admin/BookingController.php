@@ -7,6 +7,7 @@ use App\Models\Type;
 use App\Models\User;
 use App\Models\Brand;
 use App\Models\Booking;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -73,6 +74,30 @@ class BookingController extends Controller
         return view('admin.bookings.index');
     }
 
+    public function downloadPdf()
+    {
+
+        $query = Booking::with(['user', 'item.brand']);
+
+        if (request()->get('statusBooking')) {
+            $query->where('status', '=', request()->get('statusBooking'));
+        }
+
+        if (request()->get('statusBayar')) {
+            $query->where('payment_status', '=', request()->get('statusBayar'));
+        }
+
+        if (request()->get('startDate')) {
+            $query->where('start_date', '=', request()->get('startDate'));
+        }
+
+        if (request()->get('endDate')) {
+            $query->where('end_date', '=', request()->get('endDate'));
+        }
+//        dd($query->get());
+        $pdf = Pdf::loadView('cetak.booking', ['bookings' => $query->get()])->setPaper('a4', 'landscape');
+        return $pdf->stream();
+    }
 
     public function create()
     {

@@ -6,8 +6,9 @@
         </h2>
     </x-slot>
     <div class="bg-white rounded-sm p-3 shadow-md w-[90%] mt-3 mx-auto">
-        <div class="flex justify-around">
-            <select class="form-select px-4 py-3 rounded-sm " id="statusBooking">
+        <form method="post" action="{{route('admin.bookings.download-pdf')}}" class="flex justify-around">
+            @csrf
+            <select class="form-select px-4 py-3 rounded-sm " id="statusBooking" name="statusBooking">
                 <option value="" selected>Status Booking</option>
 
                 <option value="pending">Pending
@@ -16,7 +17,7 @@
                 </option>
                 <option value="done">Done</option>
             </select>
-            <select class="form-select px-4 py-3 rounded-sm" id="statusBayar">
+            <select class="form-select px-4 py-3 rounded-sm" id="statusBayar" name="statusBayar">
                 <option value="" selected>Status Bayar</option>
                 <option value="pending">Pending
                 </option>
@@ -31,7 +32,9 @@
                 <input type="date" class="form-input" id="endDate">
             </div>
 
-        </div>
+            <button href="" class="px-3 py-2 rounded-md bg-blue-500 text-white" type="submit">Download PDF</button>
+
+        </form>
     </div>
 
     <x-slot name="script">
