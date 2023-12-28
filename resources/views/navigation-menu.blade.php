@@ -6,52 +6,61 @@
                 <!-- Logo -->
                 <div class="flex items-center shrink-0">
                     <a href="{{ route('admin.dashboard') }}">
-                        <x-jet-application-mark class="block w-auto h-9" />
+                        <x-jet-application-mark class="block w-auto h-9"/>
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('admin.dashboard') }}" :active="request()->routeIs('admin.dashboard')">
+                    <x-jet-nav-link href="{{ route('admin.dashboard') }}"
+                                    :active="request()->routeIs('admin.dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('admin.bookings.index') }}" :active="request()->routeIs('admin.bookings.index')">
+                    <x-jet-nav-link href="{{ route('admin.bookings.index') }}"
+                                    :active="request()->routeIs('admin.bookings.index')">
                         {{ __('Booking') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('admin.items.index') }}" :active="request()->routeIs('admin.items.index')">
+                    <x-jet-nav-link href="{{ route('admin.items.index') }}"
+                                    :active="request()->routeIs('admin.items.index')">
                         {{ __('Item') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('admin.brands.index') }}" :active="request()->routeIs('admin.brands.index')">
+                    <x-jet-nav-link href="{{ route('admin.brands.index') }}"
+                                    :active="request()->routeIs('admin.brands.index')">
                         {{ __('Brand') }}
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('admin.types.index') }}" :active="request()->routeIs('admin.types.index')">
+                    <x-jet-nav-link href="{{ route('admin.types.index') }}"
+                                    :active="request()->routeIs('admin.types.index')">
                         {{ __('Type') }}
                     </x-jet-nav-link>
-              
+
 
                     <div class="relative mt-6">
                         <x-jet-dropdown align="right" width="48">
                             <x-slot name="trigger">
-        
-                                <button class="flex items-center text-sm font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300">
-                                    <div>Admin</div>
-        
+
+                                <button
+                                    class="flex items-center text-sm font-medium text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300">
+                                    <div>Arus kas</div>
+
                                     <div class="ml-1">
-                                        <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                        <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg"
+                                             viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd"
+                                                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                  clip-rule="evenodd"/>
                                         </svg>
                                     </div>
                                 </button>
-        
+
                             </x-slot>
-        
+
                             <x-slot name="content">
-        
+
                                 <!-- User Management -->
                                 <div class="block px-4 py-2 text-xs text-gray-400">
                                     {{ __('Arus Kas') }}
                                 </div>
-        
+
                                 <x-jet-dropdown-link href="{{ route('admin.users.index') }}">
                                     {{ __('Kas Masuk') }}
                                 </x-jet-dropdown-link>
@@ -63,17 +72,17 @@
                                 <x-jet-dropdown-link href="{{ route('admin.users.index') }}">
                                     {{ __('Keuntungan') }}
                                 </x-jet-dropdown-link>
-        
-                            </x-slot>
-        
-                        </x-jet-dropdown>
-                        </div>
 
-                    <x-jet-nav-link href="{{ route('admin.users.index') }}" :active="request()->routeIs('admin.users.index')">
+                            </x-slot>
+
+                        </x-jet-dropdown>
+                    </div>
+
+                    <x-jet-nav-link href="{{ route('admin.users.index') }}"
+                                    :active="request()->routeIs('admin.users.index')">
                         {{ __('Users') }}
                     </x-jet-nav-link>
-                    
-                    
+
 
                 </div>
             </div>
@@ -86,14 +95,14 @@
                             <x-slot name="trigger">
                                 <span class="inline-flex rounded-md">
                                     <button type="button"
-                                        class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition bg-white border border-transparent rounded-md hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50">
+                                            class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition bg-white border border-transparent rounded-md hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50">
                                         {{ Auth::user()->currentTeam->name }}
 
                                         <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20" fill="currentColor">
+                                             viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd"
-                                                d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                                                clip-rule="evenodd" />
+                                                  d="M10 3a1 1 0 01.707.293l3 3a1 1 0 01-1.414 1.414L10 5.414 7.707 7.707a1 1 0 01-1.414-1.414l3-3A1 1 0 0110 3zm-3.707 9.293a1 1 0 011.414 0L10 14.586l2.293-2.293a1 1 0 011.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                                                  clip-rule="evenodd"/>
                                         </svg>
                                     </button>
                                 </span>
@@ -126,7 +135,7 @@
                                     </div>
 
                                     @foreach (Auth::user()->allTeams() as $team)
-                                        <x-jet-switchable-team :team="$team" />
+                                        <x-jet-switchable-team :team="$team"/>
                                     @endforeach
                                 </div>
                             </x-slot>
@@ -142,19 +151,19 @@
                                 <button
                                     class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
                                     <img class="object-cover w-8 h-8 rounded-full"
-                                        src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                                         src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}"/>
                                 </button>
                             @else
                                 <span class="inline-flex rounded-md">
                                     <button type="button"
-                                        class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition bg-white border border-transparent rounded-md hover:text-gray-700 focus:outline-none">
+                                            class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition bg-white border border-transparent rounded-md hover:text-gray-700 focus:outline-none">
                                         {{ Auth::user()->name }}
 
                                         <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20" fill="currentColor">
+                                             viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd"
-                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                clip-rule="evenodd" />
+                                                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                  clip-rule="evenodd"/>
                                         </svg>
                                     </button>
                                 </span>
@@ -195,13 +204,13 @@
             <!-- Hamburger -->
             <div class="flex items-center -mr-2 sm:hidden">
                 <button @click="open = ! open"
-                    class="inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500">
+                        class="inline-flex items-center justify-center p-2 text-gray-400 transition rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500">
                     <svg class="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16" />
+                              stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M4 6h16M4 12h16M4 18h16"/>
                         <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                              stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
                 </button>
             </div>
@@ -211,32 +220,41 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-jet-responsive-nav-link href="{{ route('admin.dashboard') }}" :active="request()->routeIs('admin.dashboard')">
+            <x-jet-responsive-nav-link href="{{ route('admin.dashboard') }}"
+                                       :active="request()->routeIs('admin.dashboard')">
                 {{ __('Dashboard') }}
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('admin.bookings.index') }}" :active="request()->routeIs('admin.bookings.index')">
+            <x-jet-responsive-nav-link href="{{ route('admin.bookings.index') }}"
+                                       :active="request()->routeIs('admin.bookings.index')">
                 {{ __('Booking') }}
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('admin.items.index') }}" :active="request()->routeIs('admin.items.index')">
+            <x-jet-responsive-nav-link href="{{ route('admin.items.index') }}"
+                                       :active="request()->routeIs('admin.items.index')">
                 {{ __('Item') }}
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('admin.brands.index') }}" :active="request()->routeIs('admin.brands.index')">
+            <x-jet-responsive-nav-link href="{{ route('admin.brands.index') }}"
+                                       :active="request()->routeIs('admin.brands.index')">
                 {{ __('Brand') }}
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('admin.types.index') }}" :active="request()->routeIs('admin.types.index')">
+            <x-jet-responsive-nav-link href="{{ route('admin.types.index') }}"
+                                       :active="request()->routeIs('admin.types.index')">
                 {{ __('Type') }}
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('admin.types.index') }}" :active="request()->routeIs('admin.types.index')">
+            <x-jet-responsive-nav-link href="{{ route('admin.types.index') }}"
+                                       :active="request()->routeIs('admin.types.index')">
                 {{ __('Kas Masuk') }}
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('admin.types.index') }}" :active="request()->routeIs('admin.types.index')">
+            <x-jet-responsive-nav-link href="{{ route('admin.types.index') }}"
+                                       :active="request()->routeIs('admin.types.index')">
                 {{ __('Kas Keluar') }}
             </x-jet-responsive-nav-link>
-            <x-jet-responsive-nav-link href="{{ route('admin.types.index') }}" :active="request()->routeIs('admin.types.index')">
+            <x-jet-responsive-nav-link href="{{ route('admin.types.index') }}"
+                                       :active="request()->routeIs('admin.types.index')">
                 {{ __('Keuntungan') }}
             </x-jet-responsive-nav-link>
-           
-            <x-jet-responsive-nav-link href="{{ route('admin.users.index') }}" :active="request()->routeIs('admin.users.index')">
+
+            <x-jet-responsive-nav-link href="{{ route('admin.users.index') }}"
+                                       :active="request()->routeIs('admin.users.index')">
                 {{ __('User') }}
             </x-jet-responsive-nav-link>
         </div>
@@ -247,7 +265,7 @@
                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                     <div class="mr-3 shrink-0">
                         <img class="object-cover w-10 h-10 rounded-full" src="{{ Auth::user()->profile_photo_url }}"
-                            alt="{{ Auth::user()->name }}" />
+                             alt="{{ Auth::user()->name }}"/>
                     </div>
                 @endif
 
@@ -259,12 +277,14 @@
 
             <div class="mt-3 space-y-1">
                 <!-- Account Management -->
-                <x-jet-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
+                <x-jet-responsive-nav-link href="{{ route('profile.show') }}"
+                                           :active="request()->routeIs('profile.show')">
                     {{ __('Profile') }}
                 </x-jet-responsive-nav-link>
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                    <x-jet-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
+                    <x-jet-responsive-nav-link href="{{ route('api-tokens.index') }}"
+                                               :active="request()->routeIs('api-tokens.index')">
                         {{ __('API Tokens') }}
                     </x-jet-responsive-nav-link>
                 @endif
@@ -288,12 +308,13 @@
 
                     <!-- Team Settings -->
                     <x-jet-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}"
-                        :active="request()->routeIs('teams.show')">
+                                               :active="request()->routeIs('teams.show')">
                         {{ __('Team Settings') }}
                     </x-jet-responsive-nav-link>
 
                     @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                        <x-jet-responsive-nav-link href="{{ route('teams.create') }}" :active="request()->routeIs('teams.create')">
+                        <x-jet-responsive-nav-link href="{{ route('teams.create') }}"
+                                                   :active="request()->routeIs('teams.create')">
                             {{ __('Create New Team') }}
                         </x-jet-responsive-nav-link>
                     @endcan
@@ -306,7 +327,7 @@
                     </div>
 
                     @foreach (Auth::user()->allTeams() as $team)
-                        <x-jet-switchable-team :team="$team" component="jet-responsive-nav-link" />
+                        <x-jet-switchable-team :team="$team" component="jet-responsive-nav-link"/>
                     @endforeach
                 @endif
             </div>
