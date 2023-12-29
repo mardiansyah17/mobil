@@ -61,7 +61,7 @@
                                     {{ __('Arus Kas') }}
                                 </div>
 
-                                <x-jet-dropdown-link href="{{ route('admin.users.index') }}">
+                                <x-jet-dropdown-link href="{{ route('admin.kasmasuks.index') }}">
                                     {{ __('Kas Masuk') }}
                                 </x-jet-dropdown-link>
 

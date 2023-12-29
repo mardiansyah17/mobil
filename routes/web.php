@@ -12,6 +12,7 @@ use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\DetailController;
 use App\Http\Controllers\Front\LandingController;
 use App\Http\Controllers\Front\PaymentController;
+use App\Http\Controllers\KasMasukController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -69,6 +70,8 @@ Route::prefix('admin')->name('admin.')->middleware([
     Route::resource('bookings', AdminBookingController::class);
     Route::resource('users', AdminUsersController::class);
     Route::resource('kaskeluars', AdminKasKeluarController::class);
+    Route::resource('kasmasuks', KasMasukController::class);
+    Route::get('kasMasuk/booking', [KasMasukController::class, 'booking'])->name('kasMasuk.booking');
 
 
 });
