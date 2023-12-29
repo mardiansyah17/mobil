@@ -100,14 +100,7 @@
             <div class="overflow-hidden shadow sm:rounded-md mb-5">
 
                 <div class="px-4 py-5 bg-white sm:p-6">
-                    <div class="mt-10 mb-10">
-                        <a href="{{ route('admin.kaskeluars.create') }}"
-                           class="px-4 py-2 font-bold text-white bg-green-500 rounded shadow-lg hover:bg-green-700">
-                            + Add Pengeluaran
-                        </a>
-                        <span class="px-4" style="color:darkgray"><i>*fitur ini digunakan apabila ingin menambahkan
-                                kas keluar.</i></span>
-                    </div>
+
                     <table id="booking" class="border cell-border compact stripe">
                         <thead>
                         <tr>
@@ -137,12 +130,12 @@
 
                 <div class="px-4 py-5 bg-white sm:p-6">
                     <div class="mt-10 mb-10">
-                        <a href="{{ route('admin.kaskeluars.create') }}"
-                           class="px-4 py-2 font-bold text-white bg-green-500 rounded shadow-lg hover:bg-green-700">
-                            + Add Pengeluaran
+                        <a href="{{ route('admin.kasmasuks.create') }}"
+                           class="px-4 py-2 font-bold  text-white bg-green-500 rounded shadow-lg hover:bg-green-700">
+                            + Add Pemasukan
                         </a>
                         <span class="px-4" style="color:darkgray"><i>*fitur ini digunakan apabila ingin menambahkan
-                                kas keluar.</i></span>
+                                kas masuk.</i></span>
                     </div>
                     <table id="dataTable" class="table border cell-border compact stripe">
                         <thead>
@@ -243,7 +236,9 @@
 
                         {
                             data: 'denda',
-                            name: 'denda'
+                            name: 'denda',
+                            render: $.fn.dataTable.render.number('.', ',', 0, 'Rp '),
+
 
                         },
                         {
@@ -294,13 +289,12 @@
                         //   width: '20%',
                         // },
                         {
-                            data: 'name',
+                            data: 'user.name',
                             name: 'name'
                         },
 
                         {
-                            data: 'jenis_pengeluaran',
-                            name: 'jenis_pengeluaran'
+                            data: 'jenis_pemasukan',
                         },
                         {
                             data: 'keterangan',
@@ -313,7 +307,7 @@
 
                         },
                         {
-                            data: 'quantity',
+                            data: 'qty',
                             name: 'quantity'
 
                         },

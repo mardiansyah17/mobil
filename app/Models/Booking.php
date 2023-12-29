@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Booking extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -24,6 +24,7 @@ class Booking extends Model
         'total_price',
         'item_id',
         'user_id',
+        'denda'
     ];
 
     protected $casts = [

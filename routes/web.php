@@ -72,6 +72,8 @@ Route::prefix('admin')->name('admin.')->middleware([
     Route::resource('kaskeluars', AdminKasKeluarController::class);
     Route::resource('kasmasuks', KasMasukController::class);
     Route::get('kasMasuk/booking', [KasMasukController::class, 'booking'])->name('kasMasuk.booking');
+    Route::get('kasMasuk/{booking}/denda', [KasMasukController::class, 'createDenda'])->name('kasMasuk.create.denda');
+    Route::post('kasMasuk/{booking}/denda', [KasMasukController::class, 'storeDenda'])->name('kasMasuk.store.denda');
 
 
 });
