@@ -2,7 +2,7 @@
     <x-slot name="title">Admin</x-slot>
     <x-slot name="header">
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
-            {{ __('Kas Keluar') }}
+            {{ __('Kas Masuk') }}
         </h2>
     </x-slot>
 
@@ -13,7 +13,7 @@
             <div class="grid grid-cols-2 gap-6 px-3 mt-4-mx-3">
                 <div class="overflow-hidden shadow sm:rounded-md">
                     <div class="px-4 py-5 bg-white sm:p-6">
-                        <form action="{{route('admin.kas-keluar.download-pdf')}}" method="post" class="w-full">
+                        <form action="{{route('admin.kas-masuk.download-pdf')}}" method="post" class="w-full">
                             @csrf
                             <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                                    for="grid-last-name">
@@ -71,7 +71,7 @@
                             </label>
                             <div class="w-full mb-10">
                                 <label class="p-10 font-bold ps-10"
-                                       style="font-size:50px">Rp. {{ number_format($kas_keluar) }}</label>
+                                       style="font-size:50px">Rp. {{ number_format($total_pemasukan) }}</label>
                             </div>
 
                             <div class="flex flex-wrap mb-2 -mx-3 overflow-hidden">
@@ -101,7 +101,7 @@
 
                 <div class="px-4 py-5 bg-white sm:p-6">
 
-                    <table id="booking" class="border cell-border compact stripe">
+                    <table id="booking" class="border  cell-border compact stripe">
                         <thead>
                         <tr>
                             <th style="">ID</th>
@@ -143,7 +143,7 @@
                             <th style="max-width: 1%">ID</th>
                             {{-- <th style="max-width: 20%">Thumbnail</th> --}}
                             <th>Nama</th>
-                            <th>Jenis Pengeluaran</th>
+                            <th>Jenis Pemasukan</th>
                             <th>Keterangan</th>
                             <th>Tanggal</th>
                             <th>Quantity</th>
@@ -156,7 +156,7 @@
                         <tbody class="text-center"></tbody>
                         <tfoot>
                         <th colspan="7">Total</th>
-                        <th>Rp. {{ number_format($kas_keluar) }}</th>
+                        <th>Rp. {{ number_format($kas_masuk) }}</th>
                         <th></th>
 
                         </tfoot>
@@ -342,9 +342,7 @@
                     datatable.draw();
                 });
 
-                $(document).on('click', '#btnDenda', function () {
-                    console.log('tes')
-                })
+
             })
 
         </script>

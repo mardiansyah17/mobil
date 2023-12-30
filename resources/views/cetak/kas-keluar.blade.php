@@ -1,6 +1,14 @@
 @extends('layouts.cetak')
 
 @section('content')
+
+    <table style="font-size: 20px;">
+        <tr>
+            <td style="width: 200px;border: none!important;">Total pengeluaran</td>
+            <td style="width: 10px;border: none!important;">:</td>
+            <td style="border: none!important;">Rp {{number_format($total)}}</td>
+        </tr>
+    </table>
     <table>
         <thead>
         <tr>
@@ -23,8 +31,8 @@
                 <td>{{$item->keterangan}}</td>
                 <td>{{$item->tanggal}}</td>
                 <td>{{$item->quantity}}</td>
-                <td>{{$item->harga}}</td>
-                <td>{{$item->total}}</td>
+                <td>Rp {{number_format($item->harga)}}</td>
+                <td>Rp {{number_format($item->total)}}</td>
             </tr>
 
         @endforeach

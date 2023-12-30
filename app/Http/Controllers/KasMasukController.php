@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
-use App\Models\KasKeluar;
 use App\Models\KasMasuk;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Yajra\DataTables\DataTables;
 
@@ -15,7 +15,9 @@ class KasMasukController extends Controller
     {
 
 
-        $data = KasKeluar::all()->sum('total');
+        $kas_masuk = KasMasuk::all()->sum('total');
+        $denda = Booking::all()->sum('denda');
+        $total_pemasukan = $kas_masuk + $denda;
         if (request()->ajax()) {
             $query = KasMasuk::query()->with('user');
 
@@ -27,7 +29,6 @@ class KasMasukController extends Controller
                         Carbon::createFromFormat('m/d/Y', request()->get("endDate"))->format('Y-m-d')
                     ]);
 
-//                dd($query->toSql());
             }
 
             return DataTables::of($query)
@@ -57,28 +58,29 @@ class KasMasukController extends Controller
         // script untuk return halaman view brand
         // return view('admin.kaskeluars.index');
         return view('admin.kasMasuk.index', [
-            'kas_keluar' => $data,
+            'total_pemasukan' => $total_pemasukan,
+            'kas_masuk' => $kas_masuk,
         ]);
     }
 
     public function booking()
     {
         $query = Booking::with(['user', 'item.brand']);
-        if (request()->get('statusBooking')) {
-            $query->where('status', '=', request()->get('statusBooking'));
-        }
-
-        if (request()->get('statusBayar')) {
-            $query->where('payment_status', '=', request()->get('statusBayar'));
-        }
-
-        if (request()->get('startDate')) {
-            $query->where('start_date', '=', request()->get('startDate'));
-        }
-
-        if (request()->get('endDate')) {
-            $query->where('end_date', '=', request()->get('endDate'));
-        }
+//        if (request()->get('statusBooking')) {
+//            $query->where('status', '=', request()->get('statusBooking'));
+//        }
+//
+//        if (request()->get('statusBayar')) {
+//            $query->where('payment_status', '=', request()->get('statusBayar'));
+//        }
+//
+//        if (request()->get('startDate')) {
+//            $query->where('start_date', '=', request()->get('startDate'));
+//        }
+//
+//        if (request()->get('endDate')) {
+//            $query->where('end_date', '=', request()->get('endDate'));
+//        }
 
 
         return DataTables::of($query)
@@ -187,5 +189,30 @@ class KasMasukController extends Controller
         $kasmasuk->delete();
 
         return redirect()->route('admin.kasmasuks.index')->with('success', 'Kas Masuk berhasil dihapus');
+    }
+
+    public function downloadPdf()
+    {
+        $kas_masuk = KasMasuk::query();
+        $denda = Booking::query()->with('item');
+
+        if (request()->get("startDate") && request()->get("endDate")) {
+            $kas_masuk
+                ->whereBetween('tanggal', [
+                    Carbon::createFromFormat('m/d/Y', request()->get("startDate"))->format('Y-m-d'),
+                    Carbon::createFromFormat('m/d/Y', request()->get("endDate"))->format('Y-m-d')
+                ]);
+
+        }
+
+        $total_pemasukan = $kas_masuk->sum('total') + $denda->sum('total_price');
+
+        $pdf = Pdf::loadView('cetak.kas-masuk', [
+            'kas_masuk' => $kas_masuk->get(),
+            'denda' => $denda->get(),
+            'total_pemasukan' => $total_pemasukan
+        ])->setPaper('a4', 'landscape');
+        return $pdf->stream();
+
     }
 }

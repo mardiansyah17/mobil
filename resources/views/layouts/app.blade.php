@@ -162,7 +162,7 @@
 </head>
 
 <body class="font-sans antialiased">
-
+<span class="bg-gray-700"></span>
 <div class="min-h-screen bg-gray-100">
     @livewire('navigation-menu')
 

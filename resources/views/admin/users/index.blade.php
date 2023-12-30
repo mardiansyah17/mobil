@@ -67,6 +67,12 @@
                         name: 'roles'
 
                     },
+                    {
+                        data: 'total',
+                        name: 'total',
+                        render: $.fn.dataTable.render.number('.', ',', 0, 'Rp '),
+
+                    },
 
                     {
                         data: 'action',
@@ -105,6 +111,7 @@
                             <th>Email</th>
 
                             <th>Roles</th>
+                            <th>Total transaksi</th>
 
                             <th style="max-width: 1%">Aksi</th>
                         </tr>

@@ -12,6 +12,7 @@ use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\DetailController;
 use App\Http\Controllers\Front\LandingController;
 use App\Http\Controllers\Front\PaymentController;
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\KasMasukController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,7 +45,7 @@ Route::name('front.')->group(function () {
         Route::get('/payment/{bookingId}', [PaymentController::class, 'index'])->name('payment');
         Route::post('/payment/{bookingId}', [PaymentController::class, 'update'])->name('payment.update');
 
-
+        Route::resource('history', HistoryController::class);
     });
 });
 
@@ -61,6 +62,7 @@ Route::prefix('admin')->name('admin.')->middleware([
     Route::get('/brand/download', [AdminBrandController::class, 'downloadPdf'])->name('brand.download-pdf');
     Route::post('/user/download', [AdminUsersController::class, 'downloadPdf'])->name('user.download-pdf');
     Route::post('/kas-keluar/download', [AdminKasKeluarController::class, 'downloadPdf'])->name('kas-keluar.download-pdf');
+    Route::post('/kas-masuk/download', [KasMasukController::class, 'downloadPdf'])->name('kas-masuk.download-pdf');
 
 
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');

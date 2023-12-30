@@ -7,6 +7,8 @@ use App\Http\Requests\UserRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\DataTables;
 
@@ -17,7 +19,7 @@ class AdminUsersController extends Controller
     {
         //
         if (request()->ajax()) {
-            $query = User::query();
+            $query = User::with('bookings');
 
             if (request()->get('role')) {
                 $query->where('roles', '=', request()->get('role'));
@@ -38,7 +40,9 @@ class AdminUsersController extends Controller
                             ' . method_field('delete') . csrf_field() . '
                         </form>';
                 })
-                ->rawColumns(['action'])
+                ->addColumn('total', function ($user) {
+                    return $user->bookings->sum("total_price");
+                })->rawColumns(['action', 'total'])
                 ->make();
         }
 
@@ -80,8 +84,8 @@ class AdminUsersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(UserRequest $request)
     {
@@ -103,7 +107,7 @@ class AdminUsersController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -114,7 +118,7 @@ class AdminUsersController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit(User $user)
     {
@@ -127,9 +131,9 @@ class AdminUsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(UserUpdateRequest $request, User $user)
     {
@@ -148,7 +152,7 @@ class AdminUsersController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy(User $user)
     {
