@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -10,7 +11,12 @@ class HistoryController extends Controller
 
     public function index()
     {
-        return view('hisotry-index');
+        $histories = Booking::with('item')->where('user_id', auth()->id())->get();
+//        dd($histories->toArray());
+        return view('hisotry-index', [
+            'histories' => $histories
+
+        ]);
     }
 
 
