@@ -33,7 +33,7 @@
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/datepicker.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     {{-- Sweetalert if error exist --}}
     @if (session()->has('error'))
         <script>
