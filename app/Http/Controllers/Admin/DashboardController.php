@@ -12,11 +12,11 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $kasMasuk = KasMasuk::select(DB::raw('MONTH(tanggal) as month, YEAR(tanggal) as year'), DB::raw('COUNT(*) as count'))
+        $kasMasuk = KasMasuk::select(DB::raw('MONTH(tanggal) as month, YEAR(tanggal) as year'), DB::raw('sum(total) as count'))
             ->groupBy(DB::raw('YEAR(tanggal), MONTH(tanggal)'))
             ->get()->toArray();
-
-        $kasKeluar = KasKeluar::select(DB::raw('MONTH(tanggal) as month, YEAR(tanggal) as year'), DB::raw('COUNT(*) as count'))
+//        dd($kasMasuk);
+        $kasKeluar = KasKeluar::select(DB::raw('MONTH(tanggal) as month, YEAR(tanggal) as year'), DB::raw('sum(total) as count'))
             ->groupBy(DB::raw('YEAR(tanggal), MONTH(tanggal)'))
             ->get()->toArray();
 

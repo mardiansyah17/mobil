@@ -91,7 +91,7 @@
 
             window.addEventListener("load", function () {
                 const options = {
-                    colors: ["#1A56DB", "#FDBA8C"],
+                    colors: ["#1A56DB", "#f7a56c"],
                     series: [
                         {
                             name: "Kas masuk",
@@ -100,13 +100,16 @@
                         },
                         {
                             name: "Kas keluar",
-                            color: "#FDBA8C",
+                            color: "#f7a56c",
                             data: kasKeluar
                         },
                     ],
                     chart: {
+                        sparkline: {
+                            enabled: false,
+                        },
                         type: "bar",
-                        height: "320px",
+                        height: "500px",
                         fontFamily: "Inter, sans-serif",
                         toolbar: {
                             show: false,
@@ -114,18 +117,25 @@
                     },
                     plotOptions: {
                         bar: {
-                            horizontal: false,
-                            columnWidth: "70%",
+                            horizontal: true,
+                            columnWidth: "100%",
+                            barHeight: "30px",
                             borderRadiusApplication: "end",
-                            borderRadius: 8,
+                            borderRadius: 6,
+                            dataLabels: {
+                                position: 'bottom',
+                                maxItems: Infinity, // Menampilkan semua data labels
+                                hideOverflowingLabels: false
+                            }
                         },
                     },
                     tooltip: {
                         shared: true,
                         intersect: false,
-                        style: {
-                            fontFamily: "Inter, sans-serif",
-                        },
+
+                        formatter: function (val) {
+                            return 'Rp ' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
                     },
                     states: {
                         hover: {
@@ -133,6 +143,7 @@
                                 type: "darken",
                                 value: 1,
                             },
+
                         },
                     },
                     stroke: {
@@ -141,7 +152,7 @@
                         colors: ["transparent"],
                     },
                     grid: {
-                        show: false,
+                        show: true,
                         strokeDashArray: 4,
                         padding: {
                             left: 2,
@@ -149,14 +160,19 @@
                             top: -14
                         },
                     },
-
+                    dataLabels: {
+                        enabled: false,
+                        formatter: function (val) {
+                            return 'Rp ' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        }
+                    },
                     xaxis: {
                         floating: false,
                         labels: {
                             show: true,
-                            style: {
-                                fontFamily: "Inter, sans-serif",
-                                cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+                            formatter: function (val) {
+                                // Format nilai dalam format mata uang Rupiah
+                                return 'Rp ' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                             }
                         },
                         axisBorder: {
@@ -167,8 +183,10 @@
                         },
                     },
                     yaxis: {
-                        show: false,
+                        show: true,
+                        labels: {}
                     },
+
                     fill: {
                         opacity: 1,
                     },
