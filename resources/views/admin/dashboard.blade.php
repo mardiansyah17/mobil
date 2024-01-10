@@ -130,11 +130,13 @@
                         },
                     },
                     tooltip: {
-                        shared: true,
-                        intersect: false,
+                        enabled: true,
 
-                        formatter: function (val) {
-                            return 'Rp ' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        y: {
+
+                            formatter: function (val) {
+                                return 'Rp ' + val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                            }
                         }
                     },
                     states: {
