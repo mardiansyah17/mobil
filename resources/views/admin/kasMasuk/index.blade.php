@@ -67,7 +67,7 @@
                         <div class="w-full">
                             <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                                    for="grid-last-name">
-                                Total Kas Keluar
+                                Total Kas masuk
                             </label>
                             <div class="w-full mb-10">
                                 <label class="p-10 font-bold ps-10"

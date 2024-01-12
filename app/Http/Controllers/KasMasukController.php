@@ -205,6 +205,15 @@ class KasMasukController extends Controller
 
         }
 
+        if (request()->get("startDate") && request()->get("endDate")) {
+            $denda
+                ->whereBetween('start_date', [
+                    Carbon::createFromFormat('m/d/Y', request()->get("startDate"))->format('Y-m-d'),
+                    Carbon::createFromFormat('m/d/Y', request()->get("endDate"))->format('Y-m-d')
+                ]);
+
+        }
+
         $total_pemasukan = $kas_masuk->sum('total') + $denda->sum('total_price');
 
         $pdf = Pdf::loadView('cetak.kas-masuk', [
