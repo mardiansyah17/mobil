@@ -14,9 +14,6 @@ use App\Http\Controllers\Front\LandingController;
 use App\Http\Controllers\Front\PaymentController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\KasMasukController;
-use App\Models\Booking;
-use App\Models\KasKeluar;
-use App\Models\KasMasuk;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -80,15 +77,6 @@ Route::prefix('admin')->name('admin.')->middleware([
     Route::get('kasMasuk/{booking}/denda', [KasMasukController::class, 'createDenda'])->name('kasMasuk.create.denda');
     Route::post('kasMasuk/{booking}/denda', [KasMasukController::class, 'storeDenda'])->name('kasMasuk.store.denda');
 
-    Route::get('keuntungan', function () {
-        $kasMasuk = KasMasuk::all();
-        $kasKeluar = KasKeluar::all();
+    Route::get('keuntungan', [\App\Http\Controllers\KeuntunganController::class, 'index'])->name('keuntungan.index');
 
-        $denda = Booking::where('denda', '!=', 0)->get();
-        return view('admin.keuntungan.index', [
-            'kasMasuk' => $kasMasuk,
-            'kasKeluar' => $kasKeluar,
-            'denda' => $denda
-        ]);
-    })->name('keuntungan.index');
 });
