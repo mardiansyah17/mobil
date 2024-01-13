@@ -63,10 +63,10 @@
                             </label>
                             <div class="w-full mb-10">
                                 <label class="p-10 font-bold ps-10"
-                                       style="font-size:50px">Rp. {{number_format(($kasMasuk->sum("total") + $denda->sum('denda') )-$kasKeluar->sum("total"))}}</label>
+                                       style="font-size:50px">Rp. {{number_format(($kasMasuk->sum("total") + $denda->sum('denda') + $denda->sum('total_price') )-$kasKeluar->sum("total"))}}</label>
                             </div>
 
-                            
+
                         </div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                         </label>
                         <div class="w-full mb-10">
                             <label class="p-10 font-bold ps-10"
-                                   style="font-size:50px">Rp. {{number_format($kasMasuk->sum("total") + $denda->sum('denda'))}}</label>
+                                   style="font-size:50px">Rp. {{number_format($kasMasuk->sum("total") + $denda->sum('denda') + $denda->sum('total_price'))}}</label>
                             <div class="font-bold">{{$kasMasuk->count() + $denda->count()}} transaksi</div>
 
                         </div>

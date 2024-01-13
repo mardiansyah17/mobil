@@ -13,7 +13,7 @@ class KeuntunganController extends Controller
         $kasMasuk = KasMasuk::all();
         $kasKeluar = KasKeluar::all();
 
-        $denda = Booking::where('denda', '!=', 0)->get();
+        $denda = Booking::where('payment_status', '=', 'success')->get();
         return view('admin.keuntungan.index', [
             'kasMasuk' => $kasMasuk,
             'kasKeluar' => $kasKeluar,

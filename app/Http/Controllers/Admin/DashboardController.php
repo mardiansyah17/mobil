@@ -15,7 +15,7 @@ class DashboardController extends Controller
     {
 
 
-        $denda = Booking::where('denda', '!=', 0)->where('payment_status', '=', 'success')->select(DB::raw('MONTH(start_date) as month, YEAR(start_date) as year'), DB::raw('sum(denda) +sum(total_price) as count'))
+        $denda = Booking::where('payment_status', '=', 'success')->where('payment_status', '=', 'success')->select(DB::raw('MONTH(start_date) as month, YEAR(start_date) as year'), DB::raw('sum(denda) +sum(total_price) as count'))
             ->groupBy(DB::raw('YEAR(start_date), MONTH(start_date)'))->get()->toArray();
 
         $kasMasuk = KasMasuk::select(DB::raw('MONTH(tanggal) as month, YEAR(tanggal) as year'), DB::raw('sum(total) as count'))
