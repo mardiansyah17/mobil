@@ -59,11 +59,12 @@
                         <div class="w-full">
                             <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
                                    for="grid-last-name">
-                                Total Kas Keluar
+                                Total Keuntungan
                             </label>
                             <div class="w-full mb-10">
-                                <label class="p-10 font-bold ps-10"
-                                       style="font-size:50px">Rp. {{number_format(($kasMasuk->sum("total") + $denda->sum('denda') + $denda->sum('total_price') )-$kasKeluar->sum("total"))}}</label>
+                                <label id="keuntungan" class="p-10 font-bold ps-10"
+                                       style="font-size:50px">
+                                    Rp {{number_format($kasMasukPrice -$kasKeluarPrice,0,",",".")}}</label>
                             </div>
 
 
@@ -87,8 +88,9 @@
                         </label>
                         <div class="w-full mb-10">
                             <label class="p-10 font-bold ps-10"
-                                   style="font-size:50px">Rp. {{number_format($kasMasuk->sum("total") + $denda->sum('denda') + $denda->sum('total_price'))}}</label>
-                            <div class="font-bold">{{$kasMasuk->count() + $denda->count()}} transaksi</div>
+                                   style="font-size:50px"
+                                   id="kasMasuk">Rp {{number_format($kasMasukPrice,0,",",".")}}</label>
+                            <div class="font-bold" id="kasMasukCount">{{$kasMasukCount}} transaksi</div>
 
                         </div>
 
@@ -108,8 +110,9 @@
                         </label>
                         <div class="w-full mb-10">
                             <label class="p-10 font-bold ps-10"
-                                   style="font-size:50px">Rp. {{number_format($kasKeluar->sum("total"))}}</label>
-                            <div class="font-bold">{{$kasKeluar->count()}} transaksi</div>
+                                   style="font-size:50px"
+                                   id="kasKeluar">Rp {{number_format($kasKeluarPrice,0,",",".")}}</label>
+                            <div class="font-bold" id="kasKeluarCount">{{$kasKeluarCount}} transaksi</div>
                         </div>
 
                         <div class="flex flex-wrap mb-2 -mx-3 overflow-hidden">
@@ -120,5 +123,38 @@
             </div>
         </div>
     </div>
+    <x-slot name="script">
+        <script>
+            $(document).ready(function () {
 
+                async function getKeuntungan() {
+                    let startDate = $('input[name=startDate]').val()
+                    let endDate = $('input[name=endDate]').val()
+                    let data = {
+                        startDate: startDate,
+                        endDate: endDate
+                    }
+                    let response = await $.ajax({
+                        url: "{{route('admin.keuntungan.index')}}",
+                        method: "get",
+                        data: data,
+                        dataType: "JSON"
+                    })
+                    $('#keuntungan').html(`Rp ${parseInt(response.kasMasukPrice) - parseInt(response.kasKeluarPrice)}`)
+                    $('#kasMasuk').html(`Rp ${response.kasMasukPrice}`)
+                    $('#kasKeluar').html(`Rp ${response.kasKeluarPrice}`)
+                    $('#kasMasukCount').html(`${response.kasMasukCount} transaksi`)
+                    $('#kasKeluarCount').html(`${response.kasKeluarCount} transaksi`)
+                }
+
+                $('input[name=startDate]').on("changeDate", async function () {
+                    await getKeuntungan()
+                });
+
+                $('input[name=endDate]').on("changeDate", async function () {
+                    await getKeuntungan()
+                });
+            });
+        </script>
+    </x-slot>
 </x-app-layout>
