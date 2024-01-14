@@ -6,7 +6,7 @@
         <tr>
             <td style="width: 200px;border: none!important;">Total pengeluaran</td>
             <td style="width: 10px;border: none!important;">:</td>
-            <td style="border: none!important;">Rp {{number_format($total_pemasukan)}}</td>
+            <td style="border: none!important;">Rp {{number_format($total_pemasukan,0,",",".")}}</td>
         </tr>
     </table>
 
@@ -39,8 +39,8 @@
                 <td>{{$item->end_date}}</td>
                 <td>{{$item->status}}</td>
                 <td>{{$item->payment_status}}</td>
-                <td>Rp {{number_format($item->denda)}}</td>
-                <td>Rp {{number_format($item->total_price)}}</td>
+                <td>Rp {{number_format($item->denda,0,",",".")}}</td>
+                <td>Rp {{number_format($item->total_price,0,",",".")}}</td>
             </tr>
 
         @endforeach
@@ -72,8 +72,8 @@
                 <td>{{$item->keterangan}}</td>
                 <td>{{$item->tanggal}}</td>
                 <td>{{$item->qty}}</td>
-                <td>Rp {{number_format($item->harga)}}</td>
-                <td>Rp {{number_format($item->total)}}</td>
+                <td>Rp {{number_format($item->harga,0,",",".")}}</td>
+                <td>Rp {{number_format($item->total,0,",",".")}}</td>
             </tr>
 
         @endforeach

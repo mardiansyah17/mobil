@@ -6,7 +6,7 @@
         <tr>
             <td style="width: 200px;border: none!important;">Total pengeluaran</td>
             <td style="width: 10px;border: none!important;">:</td>
-            <td style="border: none!important;">Rp {{number_format($total)}}</td>
+            <td style="border: none!important;">Rp {{number_format($total,0,",",".")}}</td>
         </tr>
     </table>
     <table>
@@ -31,8 +31,8 @@
                 <td>{{$item->keterangan}}</td>
                 <td>{{$item->tanggal}}</td>
                 <td>{{$item->quantity}}</td>
-                <td>Rp {{number_format($item->harga)}}</td>
-                <td>Rp {{number_format($item->total)}}</td>
+                <td>Rp {{number_format($item->harga,0,",",".")}}</td>
+                <td>Rp {{number_format($item->total,0,",",".")}}</td>
             </tr>
 
         @endforeach

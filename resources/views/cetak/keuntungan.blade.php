@@ -21,9 +21,9 @@
             <tr>
                 <td>{{$loop->iteration}}</td>
                 <td>{{$item['bulan']}}</td>
-                <td>Rp {{number_format($item['kasMasuk'])}}</td>
-                <td>Rp {{number_format($item['kasKeluar'])}}</td>
-                <td>Rp {{number_format($item['kasMasuk'] - $item['kasKeluar'])}}</td>
+                <td>Rp {{number_format($item['kasMasuk'],0,",",".")}}</td>
+                <td>Rp {{number_format($item['kasKeluar'],0,",",".")}}</td>
+                <td>Rp {{number_format($item['kasMasuk'] - $item['kasKeluar'],0,",",".")}}</td>
             </tr>
         </tbody>
         @endforeach

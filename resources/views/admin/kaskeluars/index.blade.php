@@ -71,7 +71,7 @@
                             </label>
                             <div class="w-full mb-10">
                                 <label class="p-10 font-bold ps-10"
-                                       style="font-size:50px">Rp. {{ number_format($kas_keluar) }}</label>
+                                       style="font-size:50px">Rp. {{ number_format($kas_keluar,0,",",".") }}</label>
                             </div>
 
                             <div class="flex flex-wrap mb-2 -mx-3 overflow-hidden">
@@ -130,7 +130,7 @@
                         <tbody class="text-center"></tbody>
                         <tfoot>
                         <th colspan="7">Total</th>
-                        <th>Rp. {{ number_format($kas_keluar) }}</th>
+                        <th>Rp. {{ number_format($kas_keluar,0,",",".") }}</th>
                         <th></th>
 
                         </tfoot>
