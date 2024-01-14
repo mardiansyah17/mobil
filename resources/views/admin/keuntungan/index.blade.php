@@ -6,12 +6,12 @@
             <div class="grid grid-cols-2 gap-6 mt-4-mx-3">
                 <div class="overflow-hidden shadow sm:rounded-md">
                     <div class="px-4 py-5 bg-white sm:p-6">
-                        <form action="{{route('admin.kas-masuk.download-pdf')}}" method="post" class="w-full">
-                            @csrf
-                            <label class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
-                                   for="grid-last-name">
+                        <div>
+                            <div
+                                class="block mb-2 text-xs font-bold tracking-wide text-gray-700 uppercase"
+                                for="grid-last-name">
                                 Cetak Laporan
-                            </label>
+                            </div>
 
                             <div date-rangepicker class="flex items-center mb-3">
                                 <div class="relative">
@@ -44,13 +44,13 @@
 
                             <div class="flex flex-wrap mb-2 -mx-3">
                                 <div class="w-full px-3 text-right">
-                                    <button type="submit"
-                                            class="px-4 py-2 font-bold text-white bg-blue-500 rounded shadow-lg hover:bg-blue-700">
+                                    <a href="{{route('admin.keuntungan.cetak-pdf')}}"
+                                       class="px-4 py-2 font-bold text-white bg-blue-500 rounded shadow-lg hover:bg-blue-700">
                                         Download Pdf
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
 

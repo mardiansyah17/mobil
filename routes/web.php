@@ -79,5 +79,6 @@ Route::prefix('admin')->name('admin.')->middleware([
     Route::post('kasMasuk/{booking}/denda', [KasMasukController::class, 'storeDenda'])->name('kasMasuk.store.denda');
 
     Route::get('keuntungan', [KeuntunganController::class, 'index'])->name('keuntungan.index');
+    Route::get('cetak-pdf', [KeuntunganController::class, 'cetakPdf'])->name('keuntungan.cetak-pdf');
 
 });
