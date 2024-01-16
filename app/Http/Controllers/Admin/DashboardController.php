@@ -22,16 +22,12 @@ class DashboardController extends Controller
             ->groupBy(DB::raw('YEAR(tanggal), MONTH(tanggal)'))
             ->get()->toArray();
 
-//        dd($kasMasuk, $denda);
-        // Menggabungkan array $x dan $y
         $result = Collection::make($denda)->merge($kasMasuk);
 
-// Mengelompokkan berdasarkan month dan year
         $grouped = $result->groupBy(function ($item) {
             return $item['month'] . '-' . $item['year'];
         });
 
-// Menggabungkan array yang memiliki month dan year yang sama
         $mergedKasMasuk = $grouped->map(function ($group) {
             return [
                 "month" => $group[0]['month'],

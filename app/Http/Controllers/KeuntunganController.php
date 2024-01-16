@@ -118,7 +118,12 @@ class KeuntunganController extends Controller
             ];
         }, $mergedData);
 
-        $finalResult = collect($result)->values();
+        $finalResult = collect($result)->map(function ($item) {
+            // Ubah format "Desember 2023" ke format tanggal yang dapat diurutkan
+            $timestamp = strtotime($item['bulan']);
+            $item['tanggal_urut'] = date('Y-m-d', $timestamp);
+            return $item;
+        })->sortBy('tanggal_urut')->values()->all();
 
 
         $pdf = Pdf::loadView('cetak.keuntungan', [

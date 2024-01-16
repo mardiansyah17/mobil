@@ -70,7 +70,7 @@
                                 Total Kas Keluar
                             </label>
                             <div class="w-full mb-10">
-                                <label class="p-10 font-bold ps-10"
+                                <label id="total" class="p-10 font-bold ps-10"
                                        style="font-size:50px">Rp. {{ number_format($kas_keluar,0,",",".") }}</label>
                             </div>
 
@@ -130,7 +130,7 @@
                         <tbody class="text-center"></tbody>
                         <tfoot>
                         <th colspan="7">Total</th>
-                        <th>Rp. {{ number_format($kas_keluar,0,",",".") }}</th>
+                        <th id="total2">Rp. {{ number_format($kas_keluar,0,",",".") }}</th>
                         <th></th>
 
                         </tfoot>
@@ -153,6 +153,16 @@
                     data: function (d) {
                         d.startDate = $('input[name=startDate]').val() ?? '';
                         d.endDate = $('input[name=endDate]').val() ?? '';
+                    },
+                    dataSrc: json => {
+                        const {data} = json
+                        let total = 0;
+                        data.forEach(item => {
+                            total += item.total
+                        })
+                        $('#total').html('Rp. ' + total.toLocaleString('id-ID'))
+                        $('#total2').html('Rp. ' + total.toLocaleString('id-ID'))
+                        return data
                     }
                 },
                 language: {
