@@ -70,8 +70,8 @@
                                 Total Kas masuk
                             </label>
                             <div class="w-full mb-10">
-                                <label class="p-10 font-bold ps-10"
-                                       style="font-size:50px">Rp. {{ number_format($total_pemasukan,0,",",".") }}</label>
+                                <label id="total" class="p-10 font-bold ps-10"
+                                       style="font-size:50px"></label>
                             </div>
 
                             <div class="flex flex-wrap mb-2 -mx-3 overflow-hidden">
@@ -121,6 +121,12 @@
                         <tbody class="text-center">
 
                         </tbody>
+                        <tfoot>
+                        <th colspan="8">Total</th>
+                        <th id="totalKasMasuk"></th>
+                        <th></th>
+
+                        </tfoot>
                     </table>
                 </div>
             </div>
@@ -156,7 +162,7 @@
                         <tbody class="text-center"></tbody>
                         <tfoot>
                         <th colspan="7">Total</th>
-                        <th>Rp. {{ number_format($kas_masuk,0,",",".") }}</th>
+                        <th id="totalPemasukan"></th>
                         <th></th>
 
                         </tfoot>
@@ -169,6 +175,8 @@
     <x-slot name="script">
         <script>
             $(document).ready(function () {
+                let totalKasMasuk = 0;
+                let totalPemasukank = 0;
 
                 const bookintTable = $('#booking').DataTable({
                     processing: true,
@@ -177,12 +185,21 @@
                     ajax: {
                         url: '{{route('admin.kasMasuk.booking')}}',
                         data: function (d) {
-                            d.statusBooking = $('#statusBooking').val()
-                            d.statusBayar = $('#statusBayar').val()
-                            d.startDate = $('#startDate').val()
-                            d.endDate = $('#endDate').val()
-                        }
+                            d.startDate = $('input[name=startDate]').val() ?? '';
+                            d.endDate = $('input[name=endDate]').val() ?? '';
+                        },
+                        dataSrc: function (json) {
+
+                            const kasMasuk = json.data[0]?.totalKasMasuk ?? 0;
+                            totalKasMasuk = kasMasuk;
+                            console.log(totalKasMasuk, totalPemasukank)
+                            let total = totalKasMasuk + totalPemasukank;
+                            $('#total').html('Rp ' + total);
+                            $('#totalKasMasuk').html('Rp ' + kasMasuk);
+                            return json.data;
+                        },
                     },
+
                     language: {
                         url: '//cdn.datatables.net/plug-ins/1.12.1/i18n/id.json'
                     },
@@ -269,7 +286,16 @@
                         data: function (d) {
                             d.startDate = $('input[name=startDate]').val() ?? '';
                             d.endDate = $('input[name=endDate]').val() ?? '';
-                        }
+                        },
+                        dataSrc: function (json) {
+                            const pemasukan = json.data[0]?.totalPemasukan ?? 0;
+                            totalPemasukank = pemasukan;
+                            console.log(totalKasMasuk, totalPemasukank)
+                            let total = parseInt(totalKasMasuk) + parseInt(totalPemasukank);
+                            $('#total').html('Rp ' + total);
+                            $('#totalPemasukan').html('Rp ' + pemasukan);
+                            return json.data;
+                        },
                     },
                     language: {
                         url: '//cdn.datatables.net/plug-ins/1.12.1/i18n/id.json'
@@ -334,12 +360,11 @@
                 });
 
                 // Date Range Picker on change
-                $('input[name=startDate]').on("changeDate", function () {
-                    datatable.draw();
-                });
+                $('input[name=startDate] ,input[name=endDate]').on("changeDate", async function () {
+                    await bookintTable.draw();
+                    await datatable.draw();
 
-                $('input[name=endDate]').on("changeDate", function () {
-                    datatable.draw();
+
                 });
 
 

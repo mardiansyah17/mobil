@@ -45,6 +45,9 @@ class KasMasukController extends Controller
                             ' . method_field('delete') . csrf_field() . '
                         </form>';
                 })
+                ->addColumn('totalPemasukan', function () use ($query) {
+                    return $query->sum('total');
+                })
                 ->rawColumns(['action'])
                 ->make()
                 // ->with('total', function() use ($query) {
@@ -66,21 +69,15 @@ class KasMasukController extends Controller
     public function booking()
     {
         $query = Booking::with(['user', 'item.brand']);
-//        if (request()->get('statusBooking')) {
-//            $query->where('status', '=', request()->get('statusBooking'));
-//        }
-//
-//        if (request()->get('statusBayar')) {
-//            $query->where('payment_status', '=', request()->get('statusBayar'));
-//        }
-//
-//        if (request()->get('startDate')) {
-//            $query->where('start_date', '=', request()->get('startDate'));
-//        }
-//
-//        if (request()->get('endDate')) {
-//            $query->where('end_date', '=', request()->get('endDate'));
-//        }
+
+        if (request()->get('startDate') && request()->get('endDate')) {
+            $startDate = Carbon::createFromFormat('m/d/Y', request()->get('startDate'))->format('Y-m-d');
+            $endDate = Carbon::createFromFormat('m/d/Y', request()->get('endDate'))->format('Y-m-d');
+            $query->where(function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('start_date', [$startDate, $endDate])
+                    ->orWhereBetween('end_date', [$startDate, $endDate]);
+            })->get();
+        }
 
 
         return DataTables::of($query)
@@ -89,6 +86,9 @@ class KasMasukController extends Controller
             })
             ->addColumn('end_date', function ($booking) {
                 return Carbon::parse($booking->end_date)->format('d-m-Y');
+            })
+            ->addColumn('totalKasMasuk', function ($booking) use ($query) {
+                return $query->sum('total_price');
             })
             ->addColumn('action', function ($booking) {
                 return '
