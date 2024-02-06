@@ -24,7 +24,7 @@ class BookingController extends Controller
 
     public function index()
     {
-        //
+        
         if (request()->ajax()) {
             $query = Booking::with(['user', 'item.brand']);
 
@@ -36,13 +36,16 @@ class BookingController extends Controller
                 $query->where('payment_status', '=', request()->get('statusBayar'));
             }
 
-            if (request()->get('startDate')) {
-                $query->where('start_date', '=', request()->get('startDate'));
+
+            if (request()->get('startDate') && request()->get('endDate')) {
+                $startDate = Carbon::createFromFormat('m/d/Y', request()->get('startDate'))->format('Y-m-d');
+                $endDate = Carbon::createFromFormat('m/d/Y', request()->get('endDate'))->format('Y-m-d');
+                $query->where(function ($query) use ($startDate, $endDate) {
+                    $query->whereBetween('start_date', [$startDate, $endDate])
+                        ->orWhereBetween('end_date', [$startDate, $endDate]);
+                });
             }
 
-            if (request()->get('endDate')) {
-                $query->where('end_date', '=', request()->get('endDate'));
-            }
 
 
             return DataTables::of($query)
@@ -87,13 +90,14 @@ class BookingController extends Controller
             $query->where('payment_status', '=', request()->get('statusBayar'));
         }
 
-        if (request()->get('startDate')) {
-            $query->where('start_date', '=', request()->get('startDate'));
-        }
+       if(request()->get('startDate') && request()->get('endDate')){
+           $query->whereBetween('start_date', [request()->get('startDate'), request()->get('endDate')])
+               ->whereBetween('end_date', [request()->get('startDate'), request()->get('endDate')]);
 
-        if (request()->get('endDate')) {
-            $query->where('end_date', '=', request()->get('endDate'));
-        }
+
+       }
+
+
 //        dd($query->get());
         $pdf = Pdf::loadView('cetak.booking', ['bookings' => $query->get()])->setPaper('a4', 'landscape');
         return $pdf->stream();
