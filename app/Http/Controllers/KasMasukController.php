@@ -88,7 +88,10 @@ class KasMasukController extends Controller
                 return Carbon::parse($booking->end_date)->format('d-m-Y');
             })
             ->addColumn('totalKasMasuk', function ($booking) use ($query) {
-                return $query->where('payment_status','=','success')-> sum('total_price');
+            $q =     $query->where('payment_status','=','success');
+            $totalPrice = $q->sum('total_price');
+            $totalDenda = $q->sum('denda');
+                return $totalDenda + $totalPrice;
             })
             ->addColumn('action', function ($booking) {
                 return '
