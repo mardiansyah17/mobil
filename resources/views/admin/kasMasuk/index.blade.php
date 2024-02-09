@@ -192,8 +192,7 @@
 
                             const kasMasuk = json.data[0]?.totalKasMasuk ?? 0;
                             totalKasMasuk = kasMasuk;
-                            console.log(totalKasMasuk, totalPemasukank)
-                            let total = totalKasMasuk + totalPemasukank;
+                            let total = parseInt(totalKasMasuk) + parseInt(totalPemasukank);
                             $('#total').html('Rp ' + total);
                             $('#totalKasMasuk').html('Rp ' + kasMasuk);
                             return json.data;
