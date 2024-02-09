@@ -24,7 +24,7 @@ class BookingController extends Controller
 
     public function index()
     {
-        
+
         if (request()->ajax()) {
             $query = Booking::with(['user', 'item.brand']);
 
@@ -89,13 +89,14 @@ class BookingController extends Controller
         if (request()->get('statusBayar')) {
             $query->where('payment_status', '=', request()->get('statusBayar'));
         }
-
-       if(request()->get('startDate') && request()->get('endDate')){
-           $query->whereBetween('start_date', [request()->get('startDate'), request()->get('endDate')])
-               ->whereBetween('end_date', [request()->get('startDate'), request()->get('endDate')]);
-
-
-       }
+        if (request()->get('startDate') && request()->get('endDate')) {
+            $startDate = Carbon::createFromFormat('m/d/Y', request()->get('startDate'))->format('Y-m-d');
+            $endDate = Carbon::createFromFormat('m/d/Y', request()->get('endDate'))->format('Y-m-d');
+            $query->where(function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('start_date', [$startDate, $endDate])
+                    ->orWhereBetween('end_date', [$startDate, $endDate]);
+            });
+        }
 
 
 //        dd($query->get());
